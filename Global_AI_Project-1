@@ -1,0 +1,59 @@
+import pandas as pd
+
+names = list()
+data = {
+    "Okul No": list(),
+    "Vize": list(),
+    "Final": list(),
+    "Ortalama": list(),
+    "Harf Notu": list(),
+    "Durum": list()
+    }
+loop = int(input("Kac adet ogrenci bilgisi girilecek?: "))
+# Kullanıcıdan sayı inputu alınıp ogrenci sayısı kadar donguye sokuluyor
+for _ in range(loop):
+    print("===================================================")
+    # Ogrenci bilgileri input olarak aliniyor
+    names.append(input("Ogrencinin ismini giriniz: "))
+    data["Okul No"].append(input("Okul numarasini giriniz: "))
+    vize = input("Vize Notunu Girin: ")
+    while not vize.isdigit():
+        vize = input("Gecerli bir deger girin: ")
+    final = input("Final Notunu Girin: ")
+    while not final.isdigit():
+        final = input("Gecerli bir deger girin: ")
+    data["Vize"].append(int(vize))
+    data["Final"].append(int(final))
+    # Ogrenci notlarına gore ortalama ve harf notu hesaplanıyor
+    # Hesaplamalar Kocaeli Üniversitesi notlandırma sistemine gore yapilmistir
+    data["Ortalama"].append(data["Vize"][-1]*0.4 + data["Final"][-1]*0.6)
+    if data["Ortalama"][-1] >= 90:
+        data["Harf Notu"].append("AA")
+        data["Durum"].append("Geçti")
+    elif data["Ortalama"][-1] >= 80:
+        data["Harf Notu"].append("BA")
+        data["Durum"].append("Geçti")
+    elif data["Ortalama"][-1] >= 75:
+        data["Harf Notu"].append("BB")
+        data["Durum"].append("Geçti")
+    elif data["Ortalama"][-1] >= 70:
+        data["Harf Notu"].append("CB")
+        data["Durum"].append("Geçti")
+    elif data["Ortalama"][-1] >= 60:
+        data["Harf Notu"].append("CC")
+        data["Durum"].append("Geçti")
+    elif data["Ortalama"][-1] >= 50:
+        data["Harf Notu"].append("DC")
+        data["Durum"].append("Koşullu")
+    elif data["Ortalama"][-1] >= 40:
+        data["Harf Notu"].append("DD")
+        data["Durum"].append("Kaldı")
+    elif data["Ortalama"][-1] >= 30:
+        data["Harf Notu"].append("FD")
+        data["Durum"].append("Kaldı")    
+    else:
+        data["Harf Notu"].append("FF")
+        data["Durum"].append("Kaldı")    
+df = pd.DataFrame(data=data, index=names)
+df.to_excel("proje1.xlsx")
+print("\n\n---------------  Veriler excel dosyasina kaydedildi  ---------------")
